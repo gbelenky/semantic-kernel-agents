@@ -25,16 +25,20 @@ PersistentAgent definition = await agentsClient.Administration.GetAgentAsync(azu
 // 2. Create Azure AI agent - it already has the model configured
 AzureAIAgent agent = new(definition, agentsClient);
 
-// 3. Add the CV generation function to the agent's kernel
+// 3. Add the CV generation and interview simulation functions to the agent's kernel
 var cvFunction = LoadCVGenerationFunction();
-agent.Kernel.Plugins.AddFromFunctions("CVGeneration", [cvFunction]);
+var interviewFunction = LoadInterviewSimulationFunction();
+agent.Kernel.Plugins.AddFromFunctions("RecruitingTools", [cvFunction, interviewFunction]);
 
 AzureAIAgentThread agentThread = new(agent.Client);
 try
 {
     Console.WriteLine("=== Recruiting Assistant Agent ===");
     Console.WriteLine("Ask me anything about recruiting, interviewing, or hiring!");
-    Console.WriteLine("I can also generate CVs for candidates. Just ask me to generate a CV for someone!");
+    Console.WriteLine("I can generate CVs for candidates and simulate interviews with technical and professional questions!");
+    Console.WriteLine("Available tools:");
+    Console.WriteLine("  • Generate CV: Create tailored resumes for job applications");
+    Console.WriteLine("  • Interview Simulation: Get interview questions and candidate fit analysis");
     Console.WriteLine("Type 'exit' or 'quit' to end the conversation.\n");
 
     while (true)
@@ -79,6 +83,23 @@ static KernelFunction LoadCVGenerationFunction()
 {
     var assembly = Assembly.GetExecutingAssembly();
     var resourceName = "recruiting_agent_sk.Prompts.GenerateCV.yaml";
+
+    using var stream = assembly.GetManifestResourceStream(resourceName);
+    if (stream == null)
+    {
+        throw new InvalidOperationException($"Could not find embedded resource: {resourceName}");
+    }
+
+    using var reader = new StreamReader(stream);
+    var yamlContent = reader.ReadToEnd();
+
+    return KernelFunctionFactory.CreateFromPrompt(yamlContent);
+}
+
+static KernelFunction LoadInterviewSimulationFunction()
+{
+    var assembly = Assembly.GetExecutingAssembly();
+    var resourceName = "recruiting_agent_sk.Prompts.InterviewSimulation.yaml";
 
     using var stream = assembly.GetManifestResourceStream(resourceName);
     if (stream == null)

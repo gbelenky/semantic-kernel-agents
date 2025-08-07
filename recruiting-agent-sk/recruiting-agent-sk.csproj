@@ -35,6 +35,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Prompts\GenerateCV.yaml" />
+    <EmbeddedResource Include="Prompts\InterviewSimulation.yaml" />
   </ItemGroup>
 
 </Project>

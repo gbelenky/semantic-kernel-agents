@@ -7,6 +7,8 @@ A sophisticated recruiting assistant built with Microsoft Semantic Kernel and Az
 This application creates an intelligent recruiting assistant that can:
 - Answer questions about recruiting, interviewing, and hiring best practices
 - Generate tailored CVs for candidates based on job requirements
+- Simulate interviews with technical and professional skills questions
+- Analyze candidate fit and identify strengths and gaps for specific roles
 - Provide personalized recruiting guidance and advice
 - Assist with job matching and application processes
 
@@ -28,8 +30,9 @@ The application uses a modern, clean architecture with the following key compone
 - Leverages `DefaultAzureCredential` for secure, passwordless authentication
 - Implements persistent agent threads for conversation continuity
 
-#### 2. CV Generation Function
-- Custom kernel function for generating tailored CVs
+#### 2. Recruiting Tools
+- **CV Generation Function**: Custom kernel function for generating tailored CVs
+- **Interview Simulation Function**: Generates technical and professional questions with candidate analysis
 - YAML-based prompt templates for flexibility
 - Embedded resource loading for reliable template access
 
@@ -46,7 +49,8 @@ recruiting-agent-sk/
 ├── Configuration/
 │   └── AzureAIOptions.cs              # Azure AI configuration model
 ├── Prompts/
-│   └── GenerateCV.yaml                # CV generation prompt template
+│   ├── GenerateCV.yaml                # CV generation prompt template
+│   └── InterviewSimulation.yaml      # Interview simulation prompt template
 ├── appsettings.json                   # Base configuration
 ├── appsettings.Development.json       # Development-specific settings
 └── recruiting-agent-sk.csproj        # Project file with dependencies
@@ -106,7 +110,10 @@ The application will start and display:
 ```
 === Recruiting Assistant Agent ===
 Ask me anything about recruiting, interviewing, or hiring!
-I can also generate CVs for candidates. Just ask me to generate a CV for someone!
+I can generate CVs for candidates and simulate interviews with technical and professional questions!
+Available tools:
+  • Generate CV: Create tailored resumes for job applications
+  • Interview Simulation: Get interview questions and candidate fit analysis
 Type 'exit' or 'quit' to end the conversation.
 
 You: 
@@ -131,6 +138,18 @@ Agent: I'll create a tailored CV for a senior software developer position at Mic
 [Generates detailed, customized CV content]
 ```
 
+**Interview Simulation:**
+```
+You: Simulate an interview for a senior .NET developer position at a fintech company
+
+Agent: I'll create a comprehensive interview simulation including:
+- 3 technical questions about .NET, C#, and system design
+- 3 professional skills questions about teamwork and problem-solving
+- Analysis of candidate strengths and gaps
+- Interview recommendations and fit score
+[Generates complete interview preparation materials]
+```
+
 **Exit Commands:**
 - Type `exit`, `quit`, or press Ctrl+C to end the conversation
 
@@ -149,8 +168,8 @@ Agent: I'll create a tailored CV for a senior software developer position at Mic
    - Instantiates `AzureAIAgent` with the retrieved definition
 
 3. **Function Registration**
-   - Loads CV generation function from embedded YAML template
-   - Registers function as a plugin in the agent's kernel
+   - Loads CV generation and interview simulation functions from embedded YAML templates
+   - Registers both functions as plugins in the agent's kernel under "RecruitingTools"
 
 4. **Conversation Loop**
    - Creates persistent agent thread for conversation continuity
@@ -191,13 +210,26 @@ static KernelFunction LoadCVGenerationFunction()
     return KernelFunctionFactory.CreateFromPrompt(yamlContent);
 }
 ```
-- Embedded resource loading for reliable template access
+- Embedded resource loading for reliable CV template access
 - Error handling for missing resources
 - Creates semantic kernel function from YAML prompt
 
-- Embedded resource loading for reliable template access
+#### `LoadInterviewSimulationFunction()`
+```csharp
+static KernelFunction LoadInterviewSimulationFunction()
+{
+    var assembly = Assembly.GetExecutingAssembly();
+    var resourceName = "recruiting_agent_sk.Prompts.InterviewSimulation.yaml";
+    
+    using var stream = assembly.GetManifestResourceStream(resourceName);
+    // Error handling and YAML content loading...
+    
+    return KernelFunctionFactory.CreateFromPrompt(yamlContent);
+}
+```
+- Embedded resource loading for reliable interview simulation template access
 - Error handling for missing resources
-- Creates semantic kernel function from YAML prompt
+- Creates semantic kernel function from YAML prompt for interview generation
 
 ## Dependencies
 

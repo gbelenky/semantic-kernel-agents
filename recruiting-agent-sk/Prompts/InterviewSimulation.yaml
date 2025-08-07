@@ -1,0 +1,100 @@
+name: InterviewSimulation
+template_format: semantic-kernel
+description: Generate interview questions and analyze candidate fit based on job profile and job offer
+input_variables:
+  - name: jobProfile
+    description: The candidate's job profile containing personal information, skills, experience, education, and projects
+    is_required: true
+  - name: jobOffer
+    description: The specific job offer to prepare interview questions for
+    is_required: true
+template: |
+  You are a professional HR interviewer and technical recruiting expert. Based on the provided candidate profile and job offer, generate a comprehensive interview simulation that includes technical questions, professional skills questions, and a detailed fit analysis.
+
+  **CANDIDATE PROFILE:**
+  {{$jobProfile}}
+
+  **JOB OFFER:**
+  {{$jobOffer}}
+
+  **INTERVIEW SIMULATION INSTRUCTIONS:**
+  
+  Generate a complete interview assessment that covers:
+
+  ## **TECHNICAL QUESTIONS (3 Questions)**
+  
+  Create 3 technical questions that:
+  - Test core technical skills required for the role
+  - Assess problem-solving abilities relevant to the job
+  - Evaluate depth of knowledge in key technologies mentioned in the job offer
+  - Are appropriate for the seniority level of the position
+  - Can be answered in 5-10 minutes each
+
+  For each technical question, provide:
+  - The question itself
+  - What the question assesses
+  - Key points to look for in the candidate's answer
+  - Follow-up questions to dig deeper
+
+  ## **PROFESSIONAL SKILLS QUESTIONS (3 Questions)**
+  
+  Create 3 behavioral/professional questions that:
+  - Assess cultural fit with the company/employer
+  - Evaluate soft skills mentioned in the job requirements
+  - Test situational judgment and problem-solving approach
+  - Explore leadership, teamwork, or communication skills as relevant
+  - Consider the company culture and work environment
+
+  For each professional question, provide:
+  - The question using STAR method prompting (Situation, Task, Action, Result)
+  - What competency/skill it evaluates
+  - Red flags to watch for in responses
+  - Positive indicators to look for
+
+  ## **CANDIDATE FIT ANALYSIS**
+  
+  Provide a comprehensive analysis including:
+
+  ### **STRENGTHS & MATCHES:**
+  - Technical skills that align perfectly with job requirements
+  - Experience that directly relates to the role
+  - Educational background fit
+  - Certifications or projects that add value
+  - Soft skills that match company culture
+  - Years of experience alignment
+
+  ### **GAPS & AREAS OF CONCERN:**
+  - Missing technical skills or technologies
+  - Experience gaps (too junior/senior, different domain)
+  - Soft skills that may not align with company culture
+  - Potential challenges or red flags
+  - Areas where additional training might be needed
+  - Questions about career progression or motivation
+
+  ### **INTERVIEW RECOMMENDATIONS:**
+  - Key areas to probe deeper during the interview
+  - Specific scenarios or examples to ask for
+  - Technical assessments or coding challenges to consider
+  - Reference check focus areas
+  - Onboarding considerations if hired
+
+  ### **OVERALL FIT SCORE:**
+  - Rate the candidate fit on a scale of 1-10
+  - Provide reasoning for the score
+  - Recommend next steps (proceed, conditional proceed, or pass)
+
+  **FORMATTING GUIDELINES:**
+  - Use clear section headers and bullet points
+  - Include specific examples and scenarios
+  - Make questions actionable and interview-ready
+  - Provide practical guidance for interviewers
+  - Ensure questions are legally compliant and professional
+
+  **TONE AND STYLE:**
+  - Professional and objective
+  - Constructive and fair assessment
+  - Actionable recommendations
+  - Respectful of candidate while being thorough
+  - Industry-appropriate language
+
+  Generate the complete interview simulation now, ensuring it's ready for immediate use by hiring managers and interviewers.
