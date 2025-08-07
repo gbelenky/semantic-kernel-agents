@@ -1,0 +1,81 @@
+name: GenerateCV
+template_format: semantic-kernel
+description: Generate a professional CV/resume based on job profile and optionally a specific job offer
+input_variables:
+  - name: jobProfile
+    description: The candidate's job profile containing personal information, skills, experience, education, and projects
+    is_required: true
+  - name: jobOffer
+    description: The specific job offer to tailor the CV for (optional - if empty, generates a generic CV)
+    is_required: false
+    default: ""
+template: |
+  You are a professional CV/resume writer. Generate a well-structured, professional CV based on the provided job profile.
+
+  **CANDIDATE PROFILE:**
+  {{$jobProfile}}
+
+  **TARGET JOB OFFER (if provided):**
+  {{$jobOffer}}
+
+  **CV GENERATION INSTRUCTIONS:**
+  
+  If a job offer is provided above, create a tailored CV that:
+  - Emphasizes skills and experiences that directly match the job requirements
+  - Highlights relevant projects that align with the job responsibilities
+  - Uses keywords from the job description throughout the CV
+  - Customizes the professional summary to match the role
+  
+  If no job offer is provided, create a comprehensive generic CV that:
+  - Showcases all skills and experiences effectively
+  - Organizes information in a logical, professional manner
+  - Makes it suitable for multiple types of positions in the candidate's field
+
+  **CV STRUCTURE REQUIREMENTS:**
+  1. **Header Section:**
+     - Full name (large, prominent)
+     - Professional title/role
+     - Contact information (email, phone, location)
+     - LinkedIn profile and relevant links
+
+  2. **Professional Summary:**
+     - 2-3 sentences highlighting key qualifications
+     - If targeting a specific role, mention relevant experience
+
+  3. **Technical Skills:**
+     - Organize by categories (Programming Languages, Frameworks, Databases, Cloud, etc.)
+     - List most relevant/proficient skills first
+
+  4. **Professional Experience:**
+     - List in reverse chronological order
+     - For each role: Job Title, Company, Duration, Location
+     - Include 3-4 bullet points per role highlighting key achievements
+     - Use action verbs and quantifiable results
+
+  5. **Education:**
+     - Degree, Institution, Graduation Year
+     - Include relevant coursework if applicable
+
+  6. **Certifications:**
+     - List all professional certifications
+
+  7. **Key Projects:**
+     - Include 2-3 most impressive projects
+     - Show breadth of technical capabilities
+
+  **FORMATTING GUIDELINES:**
+  - Use consistent formatting and professional fonts
+  - Keep to 1-2 pages maximum
+  - Use bullet points for readability
+  - Include white space for clean appearance
+  - Use bold text for section headers and job titles
+  - Ensure ATS (Applicant Tracking System) compatibility
+
+  **TONE AND STYLE:**
+  - Professional and confident
+  - Action-oriented language
+  - Quantify achievements where possible
+  - Avoid personal pronouns (I, me, my)
+  - Use industry-standard terminology
+
+  Generate the complete CV content now, ensuring it's ready for immediate use in job applications.
